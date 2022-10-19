@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">cinedrivein</string>
+
+    <!-- Título de topbar -->
+    <string name="create_ancine_topbar_title">Cadastrar relatório</string>
+
+    <!-- Títulos principais -->
+
+    <!-- Textos -->
+    <string name="label_sessions_registred">Sessões registradas:</string>
+    <string name="label_verifying_access">Verificando acesso</string>
+
+    <!-- Botôes -->
+    <string name="btn_save_report">Salvar relatório</string>
+    <string name="btn_add_sessions">Adicionar sessões</string>
+
+    <!-- Tela: LOGIN -->
+
+    <!-- Títulos -->
+    <string name="login_title_welcome">Seja bem-vindo</string>
+
+    <!-- Subtítulos -->
+    <string name="login_subtitle_login">Insira seus dados abaixo e faça login</string>
+
+    <!-- Placeholder -->
+    <string name="login_placeholder_email">E-mail</string>
+    <string name="login_placeholder_password">Senha</string>
+
+    <!-- Botões -->
+    <string name="login_buttons_enter">Entrar</string>
+
+</resources>
