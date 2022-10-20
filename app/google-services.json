@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "283678068548",
+    "project_id": "cinedrivein",
+    "storage_bucket": "cinedrivein.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283678068548:android:99d18b834837a6d71b9111",
+        "android_client_info": {
+          "package_name": "com.example.cinedrivein"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283678068548-ur54h5l650fjfsfe86jt93q74ilh9g11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA6zHGiiigKAICv50v3Pw0uFxyKER7iK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283678068548-ur54h5l650fjfsfe86jt93q74ilh9g11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

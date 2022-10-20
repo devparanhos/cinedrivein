@@ -1,7 +1,7 @@
 package com.example.cinedrivein.presentation.feature.login.action
 
 sealed class LoginActions {
-    class Login(val email: String, val password: String): LoginActions()
-    class UpdateEmail(val email: String):LoginActions()
-    class UpdatePassword(val password: String):LoginActions()
+    data class Login(val email: String, val password: String): LoginActions()
+    data class UpdateEmail(val email: String):LoginActions()
+    data class UpdatePassword(val password: String):LoginActions()
 }
