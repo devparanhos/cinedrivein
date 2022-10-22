@@ -14,6 +14,10 @@ class RegisterViewModel:ViewModel() {
     fun submitAction(action: RegisterAction){
         when(action){
             is RegisterAction.UpdateEmail -> _state.value = _state.value.copy(email = action.email)
+            is RegisterAction.UpdateName -> _state.value = _state.value.copy(name = action.name)
+            is RegisterAction.UpdatePassword -> _state.value = _state.value.copy(password = action.password)
+            is RegisterAction.UpdateConfirmPassword -> _state.value = _state.value.copy(confirmPassword = action.confirmPassword)
+            is RegisterAction.UpdateAncineNumber -> _state.value = _state.value.copy(ancineNumber = action.ancineNumber)
         }
     }
 }

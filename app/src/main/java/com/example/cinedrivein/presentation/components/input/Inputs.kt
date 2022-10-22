@@ -138,3 +138,71 @@ fun InputPassword(
         }
     }
 }
+
+@Composable
+fun InputText(
+    modifier: Modifier = Modifier,
+    inputError: String? = null,
+    placeholder: String,
+    trailingIcon: Int? = null,
+    leadingIcon: Int,
+    data: String,
+    imeAction: ImeAction,
+    maxDigits: Int? = null,
+    keyboardType: KeyboardType,
+    onChange: (String) -> Unit,
+    onTrailing: (() -> Unit)? = null,
+    onDone: (() -> Unit)? = null
+){
+    Column() {
+        OutlinedTextField(
+            modifier = modifier.fillMaxWidth(),
+            maxLines = 1,
+            value = data,
+            placeholder = {
+                Text(text = placeholder)
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = LightGray,
+                cursorColor = LightGray
+            ),
+            trailingIcon = {
+                trailingIcon?.let {
+                    Icon(
+                        tint = LightGray,
+                        painter = painterResource(id = it),
+                        contentDescription = null,
+                        modifier = Modifier.clickable {
+                            onTrailing?.invoke()
+                        }
+                    )
+                }
+            },
+            leadingIcon = {
+                Icon(
+                    tint = LightGray,
+                    painter = painterResource(id = leadingIcon),
+                    contentDescription = null
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onDone?.invoke()
+                }
+            ),
+            onValueChange = {
+                if (maxDigits == null || it.length <= maxDigits){
+                    onChange(it)
+                }
+            }
+        )
+        inputError?.let {
+            HeightSpacer(height = 2)
+            TextError(text = it)
+        }
+    }
+}

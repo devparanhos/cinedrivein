@@ -1,5 +1,6 @@
 package com.example.cinedrivein.presentation.feature.login.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -27,13 +28,12 @@ import com.example.cinedrivein.presentation.components.text.Subtitle
 import com.example.cinedrivein.presentation.feature.login.action.LoginActions
 import com.example.cinedrivein.presentation.feature.login.state.LoginState
 import com.example.cinedrivein.presentation.feature.login.viewmodel.LoginViewModel
-import com.example.cinedrivein.presentation.navigation.Navigation
 import com.example.cinedrivein.presentation.navigation.Screen
 import com.example.cinedrivein.presentation.theme.Primary
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BuildLoginScreen(viewModel: LoginViewModel = getViewModel(), onNavigation:(String) -> Unit){
     val state by viewModel.state.collectAsState()
@@ -57,6 +57,7 @@ fun BuildLoginScreen(viewModel: LoginViewModel = getViewModel(), onNavigation:(S
     }
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreenLayout(state: LoginState, onAction: (LoginActions) -> Unit, onNavigation: (String) -> Unit) {
     val scaffoldState = rememberScaffoldState()
@@ -71,7 +72,6 @@ fun LoginScreenLayout(state: LoginState, onAction: (LoginActions) -> Unit, onNav
             }
         }
     ) {
-
         if (state.hasRequestError){
             LaunchedEffect(Unit){
                 coroutineScope.launch {

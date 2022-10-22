@@ -20,6 +20,8 @@
     <string name="login_placeholder_email">E-mail</string>
     <string name="login_placeholder_password">Senha</string>
     <string name="register_placeholder_confirm_password">Confirmar senha</string>
+    <string name="placeholder_full_name">Nome completo</string>
+    <string name="placeholder_ancine_nubmer">Registro ANCINE</string>
 
     <!-- Botões -->
     <string name="buttons_enter">Entrar</string>
