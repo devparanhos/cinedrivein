@@ -2,14 +2,13 @@ package com.example.cinedrivein.presentation.feature.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinedrivein.common.utils.string.validateEmail
-import com.example.cinedrivein.common.utils.string.validatePassword
+import com.example.cinedrivein.common.utils.extensions.validateEmail
+import com.example.cinedrivein.common.utils.extensions.validatePassword
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.usecase.CheckUserUseCase
 import com.example.cinedrivein.domain.usecase.LoginUseCase
 import com.example.cinedrivein.presentation.feature.login.action.LoginActions
 import com.example.cinedrivein.presentation.feature.login.state.LoginState
-import com.example.cinedrivein.presentation.navigation.Navigation
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cinedrivein.presentation.theme.LightGray
@@ -16,13 +17,22 @@ fun MainTitle(text: String, color: Color = Color.Black){
 }
 
 @Composable
-fun Subtitle(text: String){
+fun Title(text: String, color: Color = Color.Black){
+    Text(text = text, color = color, fontWeight = FontWeight.Normal, fontSize = 16.sp )
+}
+
+@Composable
+fun Subtitle(
+    text: String,
+    textAlign: TextAlign? = TextAlign.Left
+){
     Text(
         text = text,
         color = LightGray,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 24.sp
+        lineHeight = 24.sp,
+        textAlign = textAlign
     )
 }
 

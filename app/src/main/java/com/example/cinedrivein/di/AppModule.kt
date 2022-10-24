@@ -5,12 +5,11 @@ import com.example.cinedrivein.data.remote.service.ancine.AncineApi
 import com.example.cinedrivein.data.remote.service.ancine.AncineInterceptor
 import com.example.cinedrivein.data.repository.AncineRepositoryImpl
 import com.example.cinedrivein.data.repository.LoginRepositoryImpl
+import com.example.cinedrivein.data.repository.RegisterRepositoryImpl
 import com.example.cinedrivein.domain.repository.AncineRepository
 import com.example.cinedrivein.domain.repository.LoginRepository
-import com.example.cinedrivein.domain.usecase.CheckUserUseCase
-import com.example.cinedrivein.domain.usecase.LoginUseCase
-import com.example.cinedrivein.domain.usecase.LogoutUseCase
-import com.example.cinedrivein.domain.usecase.SendAncineReportUseCase
+import com.example.cinedrivein.domain.repository.RegisterRepository
+import com.example.cinedrivein.domain.usecase.*
 import com.example.cinedrivein.presentation.feature.ancine.create.viewmodel.CreateAncineReportViewModel
 import com.example.cinedrivein.presentation.feature.home.viewmodel.HomeViewModel
 import com.example.cinedrivein.presentation.feature.login.viewmodel.LoginViewModel
@@ -47,6 +46,10 @@ val appModule = module {
         LoginRepositoryImpl(auth = auth)
     }
 
+    single<RegisterRepository>{
+        RegisterRepositoryImpl(auth = auth)
+    }
+
     single {
         SendAncineReportUseCase(repository = get())
     }
@@ -63,6 +66,10 @@ val appModule = module {
         LogoutUseCase(repository = get())
     }
 
+    single {
+        RegisterUseCase(repository = get())
+    }
+
     viewModel {
         CreateAncineReportViewModel(sendAncineReportUseCase = get())
     }
@@ -76,6 +83,6 @@ val appModule = module {
     }
 
     viewModel{
-        RegisterViewModel()
+        RegisterViewModel(registerUseCase = get())
     }
 }

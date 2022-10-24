@@ -34,7 +34,13 @@ fun Navigation(navController:NavHostController = rememberNavController()){
         }
         composable(Screen.Register.route){
             BuildRegisterScreen(){ route ->
-                navController.popBackStack(route = route, inclusive = false)
+                when(route){
+                    Screen.Home.route -> navController.navigate(route){
+                        popUpTo(0)
+                    }
+
+                    else -> navController.popBackStack(route = route, inclusive = false)
+                }
             }
         }
     }

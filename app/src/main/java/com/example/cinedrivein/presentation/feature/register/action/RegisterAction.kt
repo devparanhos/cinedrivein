@@ -6,4 +6,6 @@ sealed class RegisterAction{
     data class UpdatePassword(val password: String): RegisterAction()
     data class UpdateConfirmPassword(val confirmPassword: String): RegisterAction()
     data class UpdateAncineNumber(val ancineNumber: String): RegisterAction()
+
+    object ValidateInputs: RegisterAction()
 }
