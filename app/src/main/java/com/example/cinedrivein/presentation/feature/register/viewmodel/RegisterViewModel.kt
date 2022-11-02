@@ -1,10 +1,11 @@
 package com.example.cinedrivein.presentation.feature.register.viewmodel
 
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cinedrivein.common.utils.extensions.*
 import com.example.cinedrivein.domain.handler.RequestHandler
+import com.example.cinedrivein.domain.model.user.User
+import com.example.cinedrivein.domain.usecase.CreateUserUseCase
 import com.example.cinedrivein.domain.usecase.RegisterUseCase
 import com.example.cinedrivein.presentation.feature.register.action.RegisterAction
 import com.example.cinedrivein.presentation.feature.register.state.RegisterState
@@ -15,7 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val registerUseCase: RegisterUseCase):ViewModel() {
+class RegisterViewModel(
+    private val registerUseCase: RegisterUseCase,
+    private val createUserUseCase: CreateUserUseCase
+):ViewModel() {
     private val _state = MutableStateFlow(RegisterState())
     val state: StateFlow<RegisterState> = _state.asStateFlow()
 
@@ -91,7 +95,8 @@ class RegisterViewModel(private val registerUseCase: RegisterUseCase):ViewModel(
                 ancineNumber = ancineNumber,
                 onHandler = object : RequestHandler{
                     override fun onSuccess(data: Any?) {
-                        _state.value = _state.value.copy(user = data as FirebaseUser)
+                        data as FirebaseUser
+                        createUser(name = name, email = email, ancineNumber = ancineNumber, user = data)
                     }
 
                     override fun onError(data: Any?, message: String?) {
@@ -99,6 +104,32 @@ class RegisterViewModel(private val registerUseCase: RegisterUseCase):ViewModel(
                             hasRequestingError = true,
                             isRequesting = false,
                             requestingError = message ?: "Algo inesperado ocorreu, tente novamente"
+                        )
+                    }
+                }
+            )
+        }
+    }
+
+    private fun createUser(name: String, email: String, ancineNumber: String, user: FirebaseUser){
+        viewModelScope.launch(Dispatchers.IO){
+            createUserUseCase.createUser(
+                User(
+                    name = name,
+                    email = email,
+                    ancineNumber = ancineNumber.toInt(),
+                    uid = user.uid
+                ),
+                onHandler = object : RequestHandler{
+                    override fun onSuccess(data: Any?) {
+                        _state.value = _state.value.copy(user = user)
+                    }
+
+                    override fun onError(data: Any?, message: String?) {
+                        _state.value = _state.value.copy(
+                            isRequesting = false,
+                            hasRequestingError = true,
+                            requestingError = message
                         )
                     }
                 }

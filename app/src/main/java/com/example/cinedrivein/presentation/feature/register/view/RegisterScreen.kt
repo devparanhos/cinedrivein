@@ -45,6 +45,11 @@ fun BuildRegisterScreen(viewModel: RegisterViewModel = getViewModel(), onNavigat
 
     val state by viewModel.state.collectAsState()
 
+    if(state.user != null)
+        LaunchedEffect(Unit){
+            onNavigation(Screen.Home.route + "/" + state.user?.uid)
+        }
+
     RegisterScreenLayout(
         state = state,
         onAction = {
@@ -83,10 +88,6 @@ fun RegisterScreenLayout(
                     message = state.requestingError.toString()
                 )
             }
-        }
-
-        state.user != null -> LaunchedEffect(Unit){
-            onNavigation(Screen.Home.route)
         }
     }
 
@@ -200,6 +201,7 @@ fun RegisterScreenLayout(
                             onAction(RegisterAction.ValidateInputs)
                         },
                         onTrailing = {
+                            focusManager.clearFocus()
                             bottomSheetLayout = BottomSheetLayout.AncineInfo
                             coroutineScope.launch {
                                 modalState.show()

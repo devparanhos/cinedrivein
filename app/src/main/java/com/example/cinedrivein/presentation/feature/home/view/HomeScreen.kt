@@ -6,10 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,10 +30,13 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun BuildHomeScreen(
+    userUid: String?,
     viewModel: HomeViewModel = getViewModel(),
     onNavigation: (String) -> Unit
 ){
     val state by viewModel.state.collectAsState()
+
+    viewModel.submitAction(HomeAction.GetUser(userUid = userUid))
 
     when{
         state.isLogged -> HomeScreenLayout(
@@ -44,7 +44,9 @@ fun BuildHomeScreen(
             onAction = {
                 viewModel.submitAction(it)
             },
-            onNavigation = {}
+            onNavigation = {
+
+            }
         )
         else -> LaunchedEffect(Unit){
             onNavigation(Screen.Login.route)
@@ -56,37 +58,44 @@ fun BuildHomeScreen(
 @Composable
 fun HomeScreenLayout(state: HomeState, onAction: (HomeAction) -> Unit, onNavigation: (String) -> Unit){
     Scaffold {
-        Column(
-            modifier = Modifier
-                .background(WhiteGray)
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column() {
-                    MainTitle(text = "Olá, usuário")
-                    HeightSpacer(height = 4)
-                    Subtitle(text = "O que você quer configurar hoje?")
-                }
-                Card(
-                    elevation = 0.dp,
-                    shape = RoundedCornerShape(100.dp),
-                    backgroundColor = Primary,
-                    contentColor = Color.White,
-                    modifier = Modifier.size(40.dp)
+        when{
+            state.isLoading -> Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                CircularProgressIndicator(color = Primary)
+            }
+            else -> {
+                Column(
+                    modifier = Modifier
+                        .background(WhiteGray)
+                        .fillMaxSize()
+                        .padding(16.dp)
                 ) {
-                    Row(modifier = Modifier.padding(8.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_menu),
-                            contentDescription = null,
-                            modifier = Modifier.clickable {
-                                onAction(HomeAction.Logout)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column() {
+                            MainTitle(text = "Olá, ${state.user?.name}")
+                            HeightSpacer(height = 4)
+                            Subtitle(text = "O que você quer configurar hoje?")
+                        }
+                        Card(
+                            elevation = 0.dp,
+                            shape = RoundedCornerShape(100.dp),
+                            backgroundColor = Primary,
+                            contentColor = Color.White,
+                            modifier = Modifier.size(40.dp)
+                        ) {
+                            Row(modifier = Modifier.padding(8.dp)) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_menu),
+                                    contentDescription = null,
+                                    modifier = Modifier.clickable {
+                                        onAction(HomeAction.Logout)
+                                    }
+                                )
                             }
-                        )
+                        }
                     }
                 }
             }

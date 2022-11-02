@@ -44,7 +44,7 @@ fun BuildLoginScreen(viewModel: LoginViewModel = getViewModel(), onNavigation:(S
         when {
             state.isLoading -> FullLoader(color = Color.White, text = stringResource(id = R.string.label_verifying_access))
             state.user != null -> LaunchedEffect(Unit){
-                onNavigation(Screen.Home.route)
+                onNavigation(Screen.Home.route + "/" + state.user?.uid)
             }
             else -> LoginScreenLayout(
                 state = state,

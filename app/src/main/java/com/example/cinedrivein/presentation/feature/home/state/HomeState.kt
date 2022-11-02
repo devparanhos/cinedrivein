@@ -1,8 +1,9 @@
 package com.example.cinedrivein.presentation.feature.home.state
 
-import com.google.firebase.auth.FirebaseUser
+import com.example.cinedrivein.domain.model.user.User
 
 data class HomeState(
-    val user: FirebaseUser? = null,
-    val isLogged: Boolean = true
+    val user: User? = null,
+    val isLogged: Boolean = true,
+    val isLoading: Boolean = true
 )

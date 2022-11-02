@@ -1,13 +1,14 @@
 package com.example.cinedrivein.data.repository
 
+import com.example.cinedrivein.data.remote.service.firestore.FirestoreService
 import com.example.cinedrivein.domain.model.Request
-import com.example.cinedrivein.domain.repository.LoginRepository
+import com.example.cinedrivein.domain.repository.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 
-class LoginRepositoryImpl(private val auth: FirebaseAuth): LoginRepository {
+class UserRepositoryImpl(private val auth: FirebaseAuth, private val firestoreService: FirestoreService): UserRepository {
     override suspend fun login(email: String, password: String, onHandler: (Request) -> Unit) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             when{
@@ -32,5 +33,11 @@ class LoginRepositoryImpl(private val auth: FirebaseAuth): LoginRepository {
     override suspend fun logout(onHandler: (FirebaseUser?) -> Unit) {
         auth.signOut()
         onHandler(auth.currentUser)
+    }
+
+    override suspend fun getUser(userUid: String, onHandler: (Request) -> Unit) {
+        firestoreService.getUser(userUid = userUid){
+            onHandler(it)
+        }
     }
 }

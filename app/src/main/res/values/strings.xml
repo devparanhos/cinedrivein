@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cinedrivein</string>
+    <string name="app_name">Cine Drive-in</string>
 
     <string name="create_ancine_topbar_title">Cadastrar relatório</string>
     <string name="label_sessions_registred">Sessões registradas:</string>
