@@ -42,13 +42,13 @@ fun TextError(text: String){
 }
 
 @Composable
-fun FollowUpText(text: String, color: Color = LightGray, onFollowUp: () -> Unit){
+fun FollowUpText(text: String, color: Color = LightGray, onFollowUp: (() -> Unit)? = null){
     Text(
         text = text,
         fontSize = 14.sp,
         color = color,
         modifier = Modifier.clickable {
-            onFollowUp()
+            onFollowUp?.invoke()
         }
     )
 }

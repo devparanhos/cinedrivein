@@ -40,4 +40,13 @@ class UserRepositoryImpl(private val auth: FirebaseAuth, private val firestoreSe
             onHandler(it)
         }
     }
+
+    override suspend fun recoverPassword(email: String, onHandler: (Request) -> Unit) {
+       auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+           when{
+               task.isSuccessful -> onHandler(Request.Success(data = true))
+               else -> onHandler(Request.Error(data = false, message = "Não foi possível enviar o e-email. Tente novamente!"))
+           }
+       }
+    }
 }

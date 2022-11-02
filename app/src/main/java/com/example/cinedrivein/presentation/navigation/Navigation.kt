@@ -41,6 +41,8 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                         popUpTo(0)
                     }
 
+                    Screen.Login.route -> navController.popBackStack()
+
                     else -> navController.navigate(route)
                 }
             }

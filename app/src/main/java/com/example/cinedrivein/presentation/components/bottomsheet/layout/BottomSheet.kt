@@ -23,7 +23,7 @@ fun BuildBottomSheet(
 ){
     Column(
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .padding(horizontal = 16.dp, vertical = 16.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -31,6 +31,9 @@ fun BuildBottomSheet(
         HeightSpacer(height = 24)
         when(layout){
             is BottomSheetLayout.AncineInfo -> AncineInfoBottomSheet()
+            is BottomSheetLayout.RecoverPassword -> RecoverPasswordBottomSheet(){
+                onAction?.invoke(it)
+            }
             else -> EmptyBottomSheet()
         }
         HeightSpacer(height = 24)

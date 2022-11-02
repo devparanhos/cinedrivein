@@ -8,4 +8,5 @@ interface UserRepository {
     suspend fun checkUser(onHandler: (FirebaseUser?) -> Unit)
     suspend fun logout(onHandler: (FirebaseUser?) -> Unit)
     suspend fun getUser(userUid: String, onHandler: (Request) -> Unit)
+    suspend fun recoverPassword(email: String, onHandler: (Request) -> Unit)
 }

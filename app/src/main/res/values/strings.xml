@@ -12,11 +12,13 @@
     <string name="login_title_welcome">Seja bem-vindo</string>
     <string name="register_title_register">Realizar meu cadastro</string>
     <string name="title_ancine_info">O que é um registro Ancine?</string>
+    <string name="title_recover_password">Recupere a sua senha</string>
 
     <!-- Subtítulos -->
     <string name="login_subtitle_login">Insira seus dados abaixo e faça login</string>
     <string name="register_subtitle_register">Lembramos que para este cadastro você deve ser um colaborador do Cine Drive-in Brasília</string>
     <string name="subtitle_ancine_number_explination">Cada cinema possui um código identificador com a Ancine. Verifique com o exibidor qual o código do Cine Drive-in para seu cadastro</string>
+    <string name="subtitle_recover_password">Vamos enviar um e-mail para você redefinir sua senha. Insira abaixo o e-mail do seu cadastro conosco</string>
 
     <!-- Placeholder -->
     <string name="login_placeholder_email">E-mail</string>
@@ -28,12 +30,16 @@
     <!-- Botões -->
     <string name="buttons_enter">Entrar</string>
     <string name="buttons_register">Cadastrar</string>
+    <string name="buttons_send_email">Enviar e-mail</string>
 
     <!-- FollowUp Text -->
     <string name="login_followup_forgot_password">Esqueci minha senha</string>
     <string name="login_followup_register">Quero efetuar o meu cadastro</string>
-    <string name="login_followup_app_info">Entenda para quem é este aplicativo</string>
+    <string name="login_followup_app_info">Aplicativo exclusivo para os colaboradores do Cine Drive-in</string>
     <string name="followup_close">Fechar</string>
+
+    <!-- Loading Text -->
+    <string name="loading_sending_email">Enviando e-mail...</string>
 
     <!-- Mensagens de erro -->
     <string name="login_error_message_unexpected">Algo inesperado aconteceu. Tente novamente!</string>

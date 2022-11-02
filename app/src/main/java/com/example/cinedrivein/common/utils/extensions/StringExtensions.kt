@@ -57,7 +57,7 @@ fun String.validateAncineNumber(): InputValidation{
     return if (this.trim().isEmpty()){
         inputValidation.copy(isValid = false, errorMessage = "* O registro Ancine é obrigatório. Verifique o número com o exibidor")
     }else if (this.trim().length != 4){
-        inputValidation.copy(isValid = false, errorMessage = "* O registro Ancine deve conter 5 dígitos")
+        inputValidation.copy(isValid = false, errorMessage = "* O registro Ancine deve conter 4 dígitos")
     }else if (this.trim() != CineDriveIn.ANCINE_NUMBER){
         inputValidation.copy(isValid = false, errorMessage = "* O número Ancine informado é inválido")
     } else{

@@ -84,12 +84,16 @@ val appModule = module {
         CreateUserUseCase(repository = get())
     }
 
+    single {
+        RecoverPasswordUseCase(repository = get())
+    }
+
     viewModel {
         CreateAncineReportViewModel(sendAncineReportUseCase = get())
     }
 
     viewModel{
-        LoginViewModel(loginUseCase = get(), checkUserUseCase = get())
+        LoginViewModel(loginUseCase = get(), checkUserUseCase = get(), recoverPasswordUseCase = get())
     }
 
     viewModel{

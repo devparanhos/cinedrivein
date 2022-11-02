@@ -3,6 +3,8 @@ package com.example.cinedrivein.presentation.feature.login.view
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -16,12 +18,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.cinedrivein.R
+import com.example.cinedrivein.presentation.components.bottomsheet.layout.BuildBottomSheet
+import com.example.cinedrivein.presentation.components.bottomsheet.model.BottomSheetLayout
 import com.example.cinedrivein.presentation.components.button.FilledButton
 import com.example.cinedrivein.presentation.components.input.InputEmail
 import com.example.cinedrivein.presentation.components.input.InputPassword
 import com.example.cinedrivein.presentation.components.loader.FullLoader
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
+import com.example.cinedrivein.presentation.components.spacer.WidthSpacer
 import com.example.cinedrivein.presentation.components.text.FollowUpText
 import com.example.cinedrivein.presentation.components.text.MainTitle
 import com.example.cinedrivein.presentation.components.text.Subtitle
@@ -57,116 +63,177 @@ fun BuildLoginScreen(viewModel: LoginViewModel = getViewModel(), onNavigation:(S
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreenLayout(state: LoginState, onAction: (LoginActions) -> Unit, onNavigation: (String) -> Unit) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
+    val modalState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden, confirmStateChange = { false })
+    var bottomSheetLayout: BottomSheetLayout? by remember { mutableStateOf(null) }
+    val interactionSource = remember { MutableInteractionSource() }
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        snackbarHost = {
-            SnackbarHost(hostState = it){ data ->
-                Snackbar(snackbarData = data, backgroundColor = Primary)
-            }
+    ModalBottomSheetLayout(
+        sheetState = modalState,
+        sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+        sheetElevation = 5.dp,
+        sheetContent = {
+            BuildBottomSheet(
+                layout = bottomSheetLayout,
+                onAction = {
+                    coroutineScope.launch {
+                        modalState.hide()
+                        onAction(LoginActions.RecoverPassword(it as String))
+                    }
+                },
+                onDismiss = {
+                    coroutineScope.launch {
+                        modalState.hide()
+                    }
+                }
+            )
         }
     ) {
-        if (state.hasRequestError){
-            LaunchedEffect(Unit){
-                coroutineScope.launch {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = state.messageError.toString()
-                    )
+        Scaffold(
+            scaffoldState = scaffoldState,
+            snackbarHost = {
+                SnackbarHost(hostState = it){ data ->
+                    Snackbar(snackbarData = data, backgroundColor = Primary)
                 }
             }
-        }
-
-        Box(modifier = Modifier.fillMaxSize()){
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                painter = painterResource(id = R.drawable.movies_poster),
-                contentDescription = null
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Primary.copy(alpha = 0.8f)),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
+            if (state.hasRequestError){
+                LaunchedEffect(Unit){
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = state.messageError.toString()
+                        )
+                    }
+                }
+            }
+
+            Box(modifier = Modifier.fillMaxSize()){
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    painter = painterResource(id = R.drawable.movies_poster),
+                    contentDescription = null
+                )
+            }
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.6f)
-                    .padding(24.dp)
-                    .weight(1f),
-                painter = painterResource(id = R.drawable.logo_white),
-                contentDescription = null
-            )
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(2.5f),
-                shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomEnd = 0.dp, bottomStart = 0.dp)
+                    .fillMaxSize()
+                    .background(Primary.copy(alpha = 0.8f)),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 32.dp)
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth(0.6f)
+                        .padding(24.dp)
+                        .weight(1f),
+                    painter = painterResource(id = R.drawable.logo_white),
+                    contentDescription = null
+                )
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2.5f),
+                    shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp, bottomEnd = 0.dp, bottomStart = 0.dp)
                 ) {
-                    MainTitle(text = stringResource(id = R.string.login_title_welcome))
-                    HeightSpacer(height = 6)
-                    Subtitle(text = stringResource(id = R.string.login_subtitle_login))
-                    HeightSpacer(height = 32)
-                    InputEmail(
-                        data = state.email,
-                        imeAction = ImeAction.Next,
-                        inputError = state.emailInputError,
-                        onChange = {
-                            onAction(LoginActions.UpdateEmail(it))
-                        }
-                    )
-                    HeightSpacer(height = 24)
-                    InputPassword(
-                        data = state.password,
-                        imeAction = ImeAction.Done,
-                        inputError = state.passwordInputError,
-                        onChange = {
-                            onAction(LoginActions.UpdatePassword(it))
-                        },
-                        onDone = {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 32.dp)
+                    ) {
+                        MainTitle(text = stringResource(id = R.string.login_title_welcome))
+                        HeightSpacer(height = 6)
+                        Subtitle(text = stringResource(id = R.string.login_subtitle_login))
+                        HeightSpacer(height = 32)
+                        InputEmail(
+                            data = state.email,
+                            imeAction = ImeAction.Next,
+                            inputError = state.emailInputError,
+                            onChange = {
+                                onAction(LoginActions.UpdateEmail(it))
+                            }
+                        )
+                        HeightSpacer(height = 24)
+                        InputPassword(
+                            data = state.password,
+                            imeAction = ImeAction.Done,
+                            inputError = state.passwordInputError,
+                            onChange = {
+                                onAction(LoginActions.UpdatePassword(it))
+                            },
+                            onDone = {
+                                focusManager.clearFocus()
+                                onAction(LoginActions.Login(email = state.email, password = state.password))
+                            }
+                        )
+                        HeightSpacer(height = 32)
+                        FilledButton(
+                            isRequesting = state.isRequesting,
+                            isEnabled = !state.isRequesting,
+                            text = stringResource(id = R.string.buttons_enter).uppercase()
+                        ) {
                             focusManager.clearFocus()
                             onAction(LoginActions.Login(email = state.email, password = state.password))
                         }
-                    )
-                    HeightSpacer(height = 32)
-                    FilledButton(
-                        isRequesting = state.isRequesting,
-                        isEnabled = !state.isRequesting,
-                        text = stringResource(id = R.string.buttons_enter).uppercase()
-                    ) {
-                        focusManager.clearFocus()
-                        onAction(LoginActions.Login(email = state.email, password = state.password))
-                    }
-                    HeightSpacer(height = 40)
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            FollowUpText(text = stringResource(id = R.string.login_followup_forgot_password)){
-
+                        HeightSpacer(height = 40)
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                FollowUpText(text = stringResource(id = R.string.login_followup_forgot_password)){
+                                    coroutineScope.launch {
+                                        bottomSheetLayout = BottomSheetLayout.RecoverPassword
+                                        modalState.show()
+                                    }
+                                }
+                                HeightSpacer(height = 12)
+                                FollowUpText(text = stringResource(id = R.string.login_followup_register)){
+                                    onNavigation(Screen.Register.route)
+                                }
                             }
-                            HeightSpacer(height = 12)
-                            FollowUpText(text = stringResource(id = R.string.login_followup_register)){
-                                onNavigation(Screen.Register.route)
-                            }
+                            Text(
+                                text = stringResource(id = R.string.login_followup_app_info),
+                                fontSize = 14.sp,
+                                color = Primary
+                            )
                         }
-                        FollowUpText(text = stringResource(id = R.string.login_followup_app_info), color = Primary){
+                    }
+                }
+            }
 
+            if (state.isSendingEmail){
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.6f))
+                        .clickable(
+                            onClick = {},
+                            interactionSource = interactionSource,
+                            indication = null
+                        ),
+                    contentAlignment = Alignment.Center,
+
+                ){
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = 5.dp
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            CircularProgressIndicator(color = Primary)
+                            WidthSpacer(width = 16)
+                            Text(text = stringResource(id = R.string.loading_sending_email))
                         }
                     }
                 }

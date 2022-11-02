@@ -7,6 +7,7 @@ import com.example.cinedrivein.common.utils.extensions.validatePassword
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.usecase.CheckUserUseCase
 import com.example.cinedrivein.domain.usecase.LoginUseCase
+import com.example.cinedrivein.domain.usecase.RecoverPasswordUseCase
 import com.example.cinedrivein.presentation.feature.login.action.LoginActions
 import com.example.cinedrivein.presentation.feature.login.state.LoginState
 import com.google.firebase.auth.FirebaseUser
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-    private val checkUserUseCase: CheckUserUseCase
+    private val checkUserUseCase: CheckUserUseCase,
+    private val recoverPasswordUseCase: RecoverPasswordUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     val state: StateFlow<LoginState> = _state.asStateFlow()
@@ -34,11 +36,15 @@ class LoginViewModel(
                 email = actions.email,
                 emailInputError = null
             )
+
             is LoginActions.UpdatePassword -> _state.value = _state.value.copy(
                 password = actions.password,
                 passwordInputError = null
             )
+
             is LoginActions.Login -> validateInputs(email = actions.email, password = actions.password)
+
+            is LoginActions.RecoverPassword -> recoverPassword(email = actions.email)
         }
     }
 
@@ -73,6 +79,32 @@ class LoginViewModel(
                             hasRequestError = true,
                             messageError = message ?: "Algo inesperado ocorreu. Tente novamente",
                             exception = data as Exception
+                        )
+                    }
+                }
+            )
+        }
+    }
+
+    private fun recoverPassword(email: String){
+        _state.value = _state.value.copy(isSendingEmail = true, hasRequestError = false)
+        viewModelScope.launch(Dispatchers.IO) {
+            recoverPasswordUseCase.recoverPassword(
+                email = email,
+                onHandler = object : RequestHandler{
+                    override fun onSuccess(data: Any?) {
+                        _state.value = _state.value.copy(
+                            isSendingEmail = false,
+                            hasRequestError = true,
+                            messageError = "Verifique o seu e-mail"
+                        )
+                    }
+
+                    override fun onError(data: Any?, message: String?) {
+                        _state.value = _state.value.copy(
+                            isSendingEmail = false,
+                            hasRequestError = true,
+                            messageError = "Verifique o seu e-mail"
                         )
                     }
                 }
