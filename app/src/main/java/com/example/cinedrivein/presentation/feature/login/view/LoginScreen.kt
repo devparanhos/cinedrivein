@@ -145,6 +145,7 @@ fun LoginScreenLayout(state: LoginState, onAction: (LoginActions) -> Unit, onNav
                         isEnabled = !state.isRequesting,
                         text = stringResource(id = R.string.buttons_enter).uppercase()
                     ) {
+                        focusManager.clearFocus()
                         onAction(LoginActions.Login(email = state.email, password = state.password))
                     }
                     HeightSpacer(height = 40)

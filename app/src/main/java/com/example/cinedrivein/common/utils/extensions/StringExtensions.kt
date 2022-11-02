@@ -1,5 +1,6 @@
 package com.example.cinedrivein.common.utils.extensions
 
+import com.example.cinedrivein.common.constants.CineDriveIn
 import com.example.cinedrivein.common.utils.validation.InputValidation
 
 fun String.validateEmail(): InputValidation{
@@ -55,9 +56,11 @@ fun String.validateAncineNumber(): InputValidation{
 
     return if (this.trim().isEmpty()){
         inputValidation.copy(isValid = false, errorMessage = "* O registro Ancine é obrigatório. Verifique o número com o exibidor")
-    }else if (this.trim().length != 5){
+    }else if (this.trim().length != 4){
         inputValidation.copy(isValid = false, errorMessage = "* O registro Ancine deve conter 5 dígitos")
-    }else{
+    }else if (this.trim() != CineDriveIn.ANCINE_NUMBER){
+        inputValidation.copy(isValid = false, errorMessage = "* O número Ancine informado é inválido")
+    } else{
         inputValidation.copy(isValid = true, errorMessage = null)
     }
 }

@@ -214,6 +214,7 @@ fun RegisterScreenLayout(
                         isRequesting = state.isRequesting,
                         isEnabled = !state.isRequesting
                     ) {
+                        focusManager.clearFocus()
                         onAction(RegisterAction.ValidateInputs)
                     }
                 }
