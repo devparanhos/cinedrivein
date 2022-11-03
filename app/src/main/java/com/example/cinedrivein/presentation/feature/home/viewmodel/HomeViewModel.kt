@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val logoutUseCase: LogoutUseCase,
     private val getUserUseCase: GetUserUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow(HomeState())
@@ -23,7 +22,6 @@ class HomeViewModel(
 
     fun submitAction(action: HomeAction){
         when(action){
-            is HomeAction.Logout -> logout()
             is HomeAction.GetUser -> action.userUid?.let {
                 getUser(userUid = it)
             }
@@ -32,31 +30,21 @@ class HomeViewModel(
 
     private fun getUser(userUid: String){
         viewModelScope.launch(Dispatchers.IO) {
-            getUserUseCase.getUser(userUid = userUid, onHandler = object : RequestHandler{
-                override fun onSuccess(data: Any?) {
-                    _state.value = _state.value.copy(
-                        user = data as User,
-                        isLoading = false
-                    )
-                }
+            getUserUseCase.getUser(
+                userUid = userUid,
+                onHandler = object : RequestHandler{
+                    override fun onSuccess(data: Any?) {
+                        _state.value = _state.value.copy(
+                            user = data as User,
+                            isLoading = false
+                        )
+                    }
 
-                override fun onError(data: Any?, message: String?) {
-                    TODO("Not yet implemented")
-                }
-            })
-        }
-    }
-
-    private fun logout(){
-        viewModelScope.launch {
-            logoutUseCase.logout(){
-                when(it){
-                    null -> _state.value = _state.value.copy(isLogged = false)
-                    else -> {
-
+                    override fun onError(data: Any?, message: String?) {
+                        TODO("Not yet implemented")
                     }
                 }
-            }
+            )
         }
     }
 }

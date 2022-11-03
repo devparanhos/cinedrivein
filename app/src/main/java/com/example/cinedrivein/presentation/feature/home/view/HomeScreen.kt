@@ -1,7 +1,6 @@
 package com.example.cinedrivein.presentation.feature.home.view
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,8 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cinedrivein.R
+import com.example.cinedrivein.common.utils.extensions.toJson
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
 import com.example.cinedrivein.presentation.components.text.MainTitle
 import com.example.cinedrivein.presentation.components.text.Subtitle
@@ -45,7 +46,7 @@ fun BuildHomeScreen(
                 viewModel.submitAction(it)
             },
             onNavigation = {
-
+                onNavigation(it)
             }
         )
         else -> LaunchedEffect(Unit){
@@ -62,6 +63,7 @@ fun HomeScreenLayout(state: HomeState, onAction: (HomeAction) -> Unit, onNavigat
             state.isLoading -> Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                 CircularProgressIndicator(color = Primary)
             }
+
             else -> {
                 Column(
                     modifier = Modifier
@@ -77,7 +79,7 @@ fun HomeScreenLayout(state: HomeState, onAction: (HomeAction) -> Unit, onNavigat
                         Column() {
                             MainTitle(text = "Olá, ${state.user?.name}")
                             HeightSpacer(height = 4)
-                            Subtitle(text = "O que você quer configurar hoje?")
+                            Subtitle(text = stringResource(id = R.string.subtitle_home))
                         }
                         Card(
                             elevation = 0.dp,
@@ -91,7 +93,7 @@ fun HomeScreenLayout(state: HomeState, onAction: (HomeAction) -> Unit, onNavigat
                                     painter = painterResource(id = R.drawable.ic_menu),
                                     contentDescription = null,
                                     modifier = Modifier.clickable {
-                                        onAction(HomeAction.Logout)
+                                        onNavigation(Screen.Menu.route + "/" + state.user.toJson())
                                     }
                                 )
                             }

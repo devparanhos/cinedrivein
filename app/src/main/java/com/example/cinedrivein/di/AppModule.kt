@@ -6,14 +6,13 @@ import com.example.cinedrivein.data.remote.service.ancine.AncineInterceptor
 import com.example.cinedrivein.data.remote.service.firestore.FirestoreService
 import com.example.cinedrivein.data.repository.AncineRepositoryImpl
 import com.example.cinedrivein.data.repository.UserRepositoryImpl
-import com.example.cinedrivein.data.repository.RegisterRepositoryImpl
 import com.example.cinedrivein.domain.repository.AncineRepository
 import com.example.cinedrivein.domain.repository.UserRepository
-import com.example.cinedrivein.domain.repository.RegisterRepository
 import com.example.cinedrivein.domain.usecase.*
 import com.example.cinedrivein.presentation.feature.ancine.create.viewmodel.CreateAncineReportViewModel
 import com.example.cinedrivein.presentation.feature.home.viewmodel.HomeViewModel
 import com.example.cinedrivein.presentation.feature.login.viewmodel.LoginViewModel
+import com.example.cinedrivein.presentation.feature.menu.viewmodel.MenuViewModel
 import com.example.cinedrivein.presentation.feature.register.viewmodel.RegisterViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
@@ -50,10 +49,6 @@ val appModule = module {
 
     single<UserRepository>{
         UserRepositoryImpl(auth = auth, firestoreService = get())
-    }
-
-    single<RegisterRepository>{
-        RegisterRepositoryImpl(auth = auth, firestoreService = get())
     }
 
     single {
@@ -97,10 +92,14 @@ val appModule = module {
     }
 
     viewModel{
-        HomeViewModel(logoutUseCase = get(), getUserUseCase = get())
+        HomeViewModel(getUserUseCase = get())
     }
 
     viewModel{
         RegisterViewModel(registerUseCase = get(), createUserUseCase = get())
+    }
+
+    viewModel{
+        MenuViewModel(logoutUseCase = get())
     }
 }

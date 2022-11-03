@@ -3,10 +3,10 @@ package com.example.cinedrivein.domain.usecase
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.model.Request
 import com.example.cinedrivein.domain.model.user.User
-import com.example.cinedrivein.domain.repository.RegisterRepository
+import com.example.cinedrivein.domain.repository.UserRepository
 
 class CreateUserUseCase(
-    private val repository: RegisterRepository
+    private val repository: UserRepository
 ) {
     suspend fun createUser(user: User, onHandler: RequestHandler){
         repository.createUser(user = user){ request ->

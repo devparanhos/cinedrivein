@@ -91,7 +91,6 @@ fun RegisterScreenLayout(
         }
     }
 
-
     ModalBottomSheetLayout(
         sheetState = modalState,
         sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),

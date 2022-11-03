@@ -2,6 +2,7 @@ package com.example.cinedrivein.common.utils.extensions
 
 import com.example.cinedrivein.common.constants.CineDriveIn
 import com.example.cinedrivein.common.utils.validation.InputValidation
+import com.google.gson.Gson
 
 fun String.validateEmail(): InputValidation{
     val inputValidation = InputValidation()
@@ -63,4 +64,12 @@ fun String.validateAncineNumber(): InputValidation{
     } else{
         inputValidation.copy(isValid = true, errorMessage = null)
     }
+}
+
+fun <A> String.fromJson(type: Class<A>): A {
+    return Gson().fromJson(this, type)
+}
+
+fun <A> A.toJson(): String? {
+    return Gson().toJson(this)
 }

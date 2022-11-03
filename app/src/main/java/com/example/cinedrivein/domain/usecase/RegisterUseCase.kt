@@ -2,9 +2,9 @@ package com.example.cinedrivein.domain.usecase
 
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.model.Request
-import com.example.cinedrivein.domain.repository.RegisterRepository
+import com.example.cinedrivein.domain.repository.UserRepository
 
-class RegisterUseCase(private val repository: RegisterRepository) {
+class RegisterUseCase(private val repository: UserRepository) {
     suspend fun register(
         name: String,
         email: String,

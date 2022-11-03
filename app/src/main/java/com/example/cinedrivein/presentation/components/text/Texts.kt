@@ -24,11 +24,12 @@ fun Title(text: String, color: Color = Color.Black){
 @Composable
 fun Subtitle(
     text: String,
-    textAlign: TextAlign? = TextAlign.Left
+    textAlign: TextAlign? = TextAlign.Left,
+    color: Color = LightGray
 ){
     Text(
         text = text,
-        color = LightGray,
+        color = color,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
