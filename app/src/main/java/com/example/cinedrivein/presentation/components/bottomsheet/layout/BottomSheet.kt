@@ -31,9 +31,16 @@ fun BuildBottomSheet(
         HeightSpacer(height = 24)
         when(layout){
             is BottomSheetLayout.AncineInfo -> AncineInfoBottomSheet()
+
+            is BottomSheetLayout.DeleteData -> DeleteDataBottomSheet(
+                reference = layout.data,
+                onAction = { onAction?.invoke(layout.id)},
+            )
+
             is BottomSheetLayout.RecoverPassword -> RecoverPasswordBottomSheet(){
                 onAction?.invoke(it)
             }
+
             else -> EmptyBottomSheet()
         }
         HeightSpacer(height = 24)

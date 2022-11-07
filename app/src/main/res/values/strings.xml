@@ -12,6 +12,7 @@
     <string name="register_title_register">Realizar meu cadastro</string>
     <string name="title_ancine_info">O que é um registro Ancine?</string>
     <string name="title_recover_password">Recupere a sua senha</string>
+    <string name="title_delete_data">Você deseja excluir?</string>
 
     <!-- Subtítulos -->
     <string name="login_subtitle_login">Insira seus dados abaixo e faça login</string>
@@ -19,6 +20,7 @@
     <string name="subtitle_ancine_number_explination">Cada cinema possui um código identificador com a Ancine. Verifique com o exibidor qual o código do Cine Drive-in para seu cadastro</string>
     <string name="subtitle_recover_password">Vamos enviar um e-mail para você redefinir sua senha. Insira abaixo o e-mail do seu cadastro conosco</string>
     <string name="subtitle_home">O que você quer configurar agora?</string>
+    <string name="subtitle_delete_data">Deseja excluir %1$s. Caso remova não poderá recuperar esse dado posteriormente.</string>
 
     <!-- Placeholder -->
     <string name="login_placeholder_email">E-mail</string>
@@ -32,6 +34,7 @@
     <string name="buttons_register">Cadastrar</string>
     <string name="buttons_send_email">Enviar e-mail</string>
     <string name="buttons_change_password">Alterar senha</string>
+    <string name="buttons_delete">Deletar</string>
 
     <!-- FollowUp Text -->
     <string name="login_followup_forgot_password">Esqueci minha senha</string>
@@ -40,11 +43,22 @@
     <string name="followup_close">Fechar</string>
     <string name="followup_exit_app">Deslogar usuário</string>
     <string name="followup_distributor">Distribuidoras</string>
+    <string name="followup_movies">Filmes</string>
+    <string name="followup_prices">Preços</string>
+    <string name="followup_sessions">Sessões</string>
+    <string name="followup_report">Relatórios</string>
 
     <!-- Loading Text -->
     <string name="loading_sending_email">Enviando e-mail...</string>
+    <string name="loading_deleting">Deletando dado...</string>
 
     <!-- Mensagens de erro -->
     <string name="login_error_message_unexpected">Algo inesperado aconteceu. Tente novamente!</string>
+
+    <!-- Dado não encontrado -->
+    <string name="not_found_distributors">Nenhuma distribuidora encontrada</string>
+
+    <!-- Topbar títulos -->
+    <string name="topbar_title_distributors">Distribuidoras</string>
 
 </resources>

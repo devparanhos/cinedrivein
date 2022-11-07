@@ -2,7 +2,7 @@ package com.example.cinedrivein.presentation.feature.menu.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinedrivein.domain.usecase.LogoutUseCase
+import com.example.cinedrivein.domain.usecase.login.LogoutUseCase
 import com.example.cinedrivein.presentation.feature.menu.action.MenuAction
 import com.example.cinedrivein.presentation.feature.menu.state.MenuState
 import kotlinx.coroutines.flow.MutableStateFlow

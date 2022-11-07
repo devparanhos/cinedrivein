@@ -1,4 +1,4 @@
-package com.example.cinedrivein.domain.usecase
+package com.example.cinedrivein.domain.usecase.login
 
 import com.example.cinedrivein.domain.repository.UserRepository
 import com.example.cinedrivein.domain.handler.RequestHandler

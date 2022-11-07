@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cinedrivein.R
 import com.example.cinedrivein.common.utils.extensions.toJson
+import com.example.cinedrivein.presentation.components.loader.ScreenLoading
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
 import com.example.cinedrivein.presentation.components.text.MainTitle
 import com.example.cinedrivein.presentation.components.text.Subtitle
@@ -60,9 +61,7 @@ fun BuildHomeScreen(
 fun HomeScreenLayout(state: HomeState, onAction: (HomeAction) -> Unit, onNavigation: (String) -> Unit){
     Scaffold {
         when{
-            state.isLoading -> Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator(color = Primary)
-            }
+            state.isLoading -> ScreenLoading()
 
             else -> {
                 Column(

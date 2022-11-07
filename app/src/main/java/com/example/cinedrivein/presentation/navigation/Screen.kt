@@ -5,4 +5,5 @@ sealed class Screen(val route: String){
     object Register:Screen(route = "register")
     object Home:Screen(route = "home")
     object Menu:Screen(route = "menu")
+    object Distributors:Screen(route = "distributors")
 }

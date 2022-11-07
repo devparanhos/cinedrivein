@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.cinedrivein.common.utils.extensions.validateEmail
 import com.example.cinedrivein.common.utils.extensions.validatePassword
 import com.example.cinedrivein.domain.handler.RequestHandler
-import com.example.cinedrivein.domain.usecase.CheckUserUseCase
-import com.example.cinedrivein.domain.usecase.LoginUseCase
-import com.example.cinedrivein.domain.usecase.RecoverPasswordUseCase
+import com.example.cinedrivein.domain.usecase.user.CheckUserUseCase
+import com.example.cinedrivein.domain.usecase.login.LoginUseCase
+import com.example.cinedrivein.domain.usecase.login.RecoverPasswordUseCase
 import com.example.cinedrivein.presentation.feature.login.action.LoginActions
 import com.example.cinedrivein.presentation.feature.login.state.LoginState
 import com.google.firebase.auth.FirebaseUser

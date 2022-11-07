@@ -7,9 +7,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cinedrivein.R
 import com.example.cinedrivein.presentation.components.spacer.WidthSpacer
 import com.example.cinedrivein.presentation.theme.LightGray
 import com.example.cinedrivein.presentation.theme.Primary
@@ -81,5 +83,22 @@ fun FilledButtonSmall(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DefaultFloatingButton(
+    backgroundColor: Color = Primary,
+    icon: Int = R.drawable.ic_add,
+    onClick: () -> Unit){
+    FloatingActionButton(
+        backgroundColor = backgroundColor,
+        onClick = { onClick() }
+    ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            tint = Color.White
+        )
     }
 }

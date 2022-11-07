@@ -26,6 +26,7 @@ import com.example.cinedrivein.presentation.components.button.FilledButton
 import com.example.cinedrivein.presentation.components.input.InputEmail
 import com.example.cinedrivein.presentation.components.input.InputPassword
 import com.example.cinedrivein.presentation.components.loader.FullLoader
+import com.example.cinedrivein.presentation.components.loader.RequestingLoader
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
 import com.example.cinedrivein.presentation.components.spacer.WidthSpacer
 import com.example.cinedrivein.presentation.components.text.FollowUpText
@@ -72,7 +73,6 @@ fun LoginScreenLayout(state: LoginState, onAction: (LoginActions) -> Unit, onNav
     val focusManager = LocalFocusManager.current
     val modalState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden, confirmStateChange = { false })
     var bottomSheetLayout: BottomSheetLayout? by remember { mutableStateOf(null) }
-    val interactionSource = remember { MutableInteractionSource() }
 
     ModalBottomSheetLayout(
         sheetState = modalState,
@@ -210,33 +210,7 @@ fun LoginScreenLayout(state: LoginState, onAction: (LoginActions) -> Unit, onNav
             }
 
             if (state.isSendingEmail){
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.6f))
-                        .clickable(
-                            onClick = {},
-                            interactionSource = interactionSource,
-                            indication = null
-                        ),
-                    contentAlignment = Alignment.Center,
-
-                ){
-                    Card(
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = 5.dp
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            CircularProgressIndicator(color = Primary)
-                            WidthSpacer(width = 16)
-                            Text(text = stringResource(id = R.string.loading_sending_email))
-                        }
-                    }
-                }
+                RequestingLoader(text = stringResource(id = R.string.loading_sending_email))
             }
         }
     }

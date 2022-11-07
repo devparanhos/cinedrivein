@@ -25,6 +25,7 @@ import com.example.cinedrivein.domain.model.user.User
 import com.example.cinedrivein.presentation.components.button.FilledButtonSmall
 import com.example.cinedrivein.presentation.components.menuitem.MenuItem
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
+import com.example.cinedrivein.presentation.components.spacer.ListDivider
 import com.example.cinedrivein.presentation.components.text.MainTitle
 import com.example.cinedrivein.presentation.components.text.Subtitle
 import com.example.cinedrivein.presentation.feature.menu.action.MenuAction
@@ -149,6 +150,38 @@ fun MenuScreenLayout(state: MenuState, onAction:(MenuAction) -> Unit, onNavigati
                                 MenuItem(
                                     text = stringResource(id = R.string.followup_distributor),
                                     icon = painterResource(id = R.drawable.ic_distributor),
+                                    hasArrow = true
+                                ) {
+                                    onNavigation(Screen.Distributors.route)
+                                }
+                                ListDivider(distance = 16)
+                                MenuItem(
+                                    text = stringResource(id = R.string.followup_movies),
+                                    icon = painterResource(id = R.drawable.ic_movie),
+                                    hasArrow = true
+                                ) {
+
+                                }
+                                ListDivider(distance = 16)
+                                MenuItem(
+                                    text = stringResource(id = R.string.followup_prices),
+                                    icon = painterResource(id = R.drawable.ic_price),
+                                    hasArrow = true
+                                ) {
+
+                                }
+                                ListDivider(distance = 16)
+                                MenuItem(
+                                    text = stringResource(id = R.string.followup_sessions),
+                                    icon = painterResource(id = R.drawable.ic_time),
+                                    hasArrow = true
+                                ) {
+
+                                }
+                                ListDivider(distance = 16)
+                                MenuItem(
+                                    text = stringResource(id = R.string.followup_report),
+                                    icon = painterResource(id = R.drawable.ic_report),
                                     hasArrow = true
                                 ) {
 

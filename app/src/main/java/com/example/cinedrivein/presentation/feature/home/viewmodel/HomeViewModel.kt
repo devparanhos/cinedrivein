@@ -1,12 +1,10 @@
 package com.example.cinedrivein.presentation.feature.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.model.user.User
-import com.example.cinedrivein.domain.usecase.GetUserUseCase
-import com.example.cinedrivein.domain.usecase.LogoutUseCase
+import com.example.cinedrivein.domain.usecase.user.GetUserUseCase
 import com.example.cinedrivein.presentation.feature.home.action.HomeAction
 import com.example.cinedrivein.presentation.feature.home.state.HomeState
 import kotlinx.coroutines.Dispatchers

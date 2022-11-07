@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cinedrivein.common.utils.extensions.fromJson
 import com.example.cinedrivein.domain.model.user.User
+import com.example.cinedrivein.presentation.feature.distributors.list.view.BuildDistributorsScreen
 import com.example.cinedrivein.presentation.feature.home.view.BuildHomeScreen
 import com.example.cinedrivein.presentation.feature.login.view.BuildLoginScreen
 import com.example.cinedrivein.presentation.feature.menu.view.BuildMenuScreen
@@ -61,8 +62,17 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                             popUpTo(0)
                         }
 
+                        Screen.Distributors.route -> navController.navigate(route)
+
                         else -> navController.popBackStack()
                     }
+                }
+            }
+        }
+        composable(Screen.Distributors.route){
+            BuildDistributorsScreen(){ route ->
+                when(route){
+                    else -> navController.popBackStack()
                 }
             }
         }

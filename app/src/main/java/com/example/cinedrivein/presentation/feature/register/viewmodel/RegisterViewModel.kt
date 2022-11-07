@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.cinedrivein.common.utils.extensions.*
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.model.user.User
-import com.example.cinedrivein.domain.usecase.CreateUserUseCase
-import com.example.cinedrivein.domain.usecase.RegisterUseCase
+import com.example.cinedrivein.domain.usecase.user.CreateUserUseCase
+import com.example.cinedrivein.domain.usecase.user.RegisterUseCase
 import com.example.cinedrivein.presentation.feature.register.action.RegisterAction
 import com.example.cinedrivein.presentation.feature.register.state.RegisterState
 import com.google.firebase.auth.FirebaseUser
