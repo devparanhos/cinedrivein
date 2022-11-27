@@ -139,7 +139,7 @@ fun RegisterScreenLayout(
                 item {
                     MainTitle(text = stringResource(id = R.string.register_title_register))
                     HeightSpacer(height = 6)
-                    Subtitle(text = stringResource(id = R.string.register_subtitle_register))
+                    Subtitle(text = stringResource(id = R.string.subtitle_register))
                     HeightSpacer(height = 32)
                     InputText(
                         placeholder = stringResource(id = R.string.placeholder_full_name),

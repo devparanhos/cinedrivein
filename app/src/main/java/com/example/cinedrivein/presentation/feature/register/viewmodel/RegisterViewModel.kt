@@ -59,7 +59,7 @@ class RegisterViewModel(
         _state.value = _state.value.copy(isRequesting = true, hasRequestingError = false)
 
         when{
-            name.validateName().isValid &&
+            name.validateText(prefix = "O nome").isValid &&
             email.validateEmail().isValid &&
             password.validatePassword().isValid &&
             confirmPassword.validateConfirmPassword(password).isValid &&
@@ -72,7 +72,7 @@ class RegisterViewModel(
 
             else -> _state.value = _state.value.copy(
                 isRequesting = false,
-                nameInputError = name.validateName().errorMessage,
+                nameInputError = name.validateText(prefix = "O nome").errorMessage,
                 emailInputError = email.validateEmail().errorMessage,
                 passwordInputError = password.validatePassword().errorMessage,
                 confirmPasswordInputError = confirmPassword.validateConfirmPassword(password).errorMessage,

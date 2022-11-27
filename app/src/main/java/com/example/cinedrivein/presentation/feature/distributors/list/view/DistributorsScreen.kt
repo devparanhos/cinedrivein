@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cinedrivein.R
+import com.example.cinedrivein.common.utils.extensions.toJson
 import com.example.cinedrivein.domain.model.distributor.Distributor
 import com.example.cinedrivein.presentation.components.bottomsheet.layout.BuildBottomSheet
 import com.example.cinedrivein.presentation.components.bottomsheet.model.BottomSheetLayout
@@ -64,7 +65,6 @@ fun DistributorsScreenLayout(state: DistributorsState, onAction: (DistributorsAc
 
     var layoutBottomSheet: BottomSheetLayout? by remember { mutableStateOf(null) }
 
-
     val coroutineScope = rememberCoroutineScope()
     val modalState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -83,7 +83,7 @@ fun DistributorsScreenLayout(state: DistributorsState, onAction: (DistributorsAc
                 onAction = {
                     when(layoutBottomSheet){
                         is BottomSheetLayout.DeleteData -> {
-                            onAction(DistributorsAction.DeleteDistributor(id = it as String))
+                            onAction(DistributorsAction.DeleteDistributor(reference = it as String))
                         }
 
                         else -> { }
@@ -109,7 +109,7 @@ fun DistributorsScreenLayout(state: DistributorsState, onAction: (DistributorsAc
             },
             floatingActionButton = {
                 if (state.distributors.isNotEmpty()) DefaultFloatingButton {
-
+                    onNavigation(Screen.CreateDistributor.route)
                 }
             }
         ) {
@@ -117,7 +117,7 @@ fun DistributorsScreenLayout(state: DistributorsState, onAction: (DistributorsAc
                 state.isLoading -> ScreenLoading()
 
                 state.distributors.isEmpty() -> DistributorEmptyState{
-
+                    onNavigation(it)
                 }
 
                 else -> {
@@ -126,12 +126,12 @@ fun DistributorsScreenLayout(state: DistributorsState, onAction: (DistributorsAc
                             DistributorItem(
                                 distributor = distributor,
                                 onEdit = {
-
+                                    onNavigation(Screen.CreateDistributor.route + "?distributor=${distributor.toJson()}")
                                 },
                                 onDelete = {
                                     coroutineScope.launch {
                                         layoutBottomSheet = BottomSheetLayout.DeleteData(
-                                            id = distributor.id,
+                                            reference = distributor.id,
                                             data = distributor.name
                                         )
                                         modalState.show()
@@ -180,7 +180,7 @@ fun DistributorEmptyState(onNavigation: (String) -> Unit){
                 text = stringResource(id = R.string.buttons_register).uppercase(),
                 modifier = Modifier.fillMaxWidth(0.4f)
             ) {
-                
+                onNavigation(Screen.CreateDistributor.route)
             }
         }
     }

@@ -10,12 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.*
 import androidx.constraintlayout.widget.Placeholder
 import com.example.cinedrivein.R
+import com.example.cinedrivein.common.utils.extensions.convertCnpj
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
 import com.example.cinedrivein.presentation.components.text.TextError
 import com.example.cinedrivein.presentation.theme.LightGray
@@ -197,6 +196,129 @@ fun InputText(
             onValueChange = {
                 if (maxDigits == null || it.length <= maxDigits){
                     onChange(it)
+                }
+            }
+        )
+        inputError?.let {
+            HeightSpacer(height = 2)
+            TextError(text = it)
+        }
+    }
+}
+
+@Composable
+fun InputTextDefault(
+    modifier: Modifier = Modifier,
+    inputError: String? = null,
+    placeholder: String,
+    trailingIcon: Int? = null,
+    data: String,
+    imeAction: ImeAction,
+    maxDigits: Int? = null,
+    keyboardType: KeyboardType,
+    onChange: (String) -> Unit,
+    onTrailing: (() -> Unit)? = null,
+    onDone: (() -> Unit)? = null
+){
+    Column() {
+        OutlinedTextField(
+            modifier = modifier.fillMaxWidth(),
+            maxLines = 1,
+            value = data,
+            placeholder = {
+                Text(text = placeholder)
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = LightGray,
+                cursorColor = LightGray
+            ),
+            trailingIcon = {
+                trailingIcon?.let {
+                    Icon(
+                        tint = LightGray,
+                        painter = painterResource(id = it),
+                        contentDescription = null,
+                        modifier = Modifier.clickable {
+                            onTrailing?.invoke()
+                        }
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onDone?.invoke()
+                }
+            ),
+            onValueChange = {
+                if (maxDigits == null || it.length <= maxDigits){
+                    onChange(it)
+                }
+            }
+        )
+        inputError?.let {
+            HeightSpacer(height = 2)
+            TextError(text = it)
+        }
+    }
+}
+
+@Composable
+fun InputCnpj(
+    modifier: Modifier = Modifier,
+    inputError: String? = null,
+    placeholder: String,
+    trailingIcon: Int? = null,
+    data: String,
+    imeAction: ImeAction,
+    maxDigits: Int? = null,
+    keyboardType: KeyboardType,
+    onChange: (String) -> Unit,
+    onTrailing: (() -> Unit)? = null,
+    onDone: (() -> Unit)? = null
+){
+    var cnpj by remember { mutableStateOf(TextFieldValue(text = data)) }
+
+    Column() {
+        OutlinedTextField(
+            modifier = modifier.fillMaxWidth(),
+            maxLines = 1,
+            value = cnpj,
+            placeholder = {
+                Text(text = placeholder)
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = LightGray,
+                cursorColor = LightGray
+            ),
+            trailingIcon = {
+                trailingIcon?.let {
+                    Icon(
+                        tint = LightGray,
+                        painter = painterResource(id = it),
+                        contentDescription = null,
+                        modifier = Modifier.clickable {
+                            onTrailing?.invoke()
+                        }
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onDone?.invoke()
+                }
+            ),
+            onValueChange = {
+                if (maxDigits == null || it.text.length <= maxDigits){
+                    cnpj = TextFieldValue(text = it.text.convertCnpj(), selection = TextRange(it.text.convertCnpj().length))
+                    onChange(cnpj.text)
                 }
             }
         )

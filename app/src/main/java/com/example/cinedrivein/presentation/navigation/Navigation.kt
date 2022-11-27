@@ -9,7 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cinedrivein.common.utils.extensions.fromJson
+import com.example.cinedrivein.domain.model.distributor.Distributor
 import com.example.cinedrivein.domain.model.user.User
+import com.example.cinedrivein.presentation.feature.distributors.create.view.BuildCreateDistributor
 import com.example.cinedrivein.presentation.feature.distributors.list.view.BuildDistributorsScreen
 import com.example.cinedrivein.presentation.feature.home.view.BuildHomeScreen
 import com.example.cinedrivein.presentation.feature.login.view.BuildLoginScreen
@@ -29,6 +31,7 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                 }
             }
         }
+
         composable(Screen.Home.route + "/{userUid}", arguments = listOf(navArgument("userUid") { type = NavType.StringType})){
             BuildHomeScreen(userUid = it.arguments?.getString("userUid")){ route ->
                 when(route.substringBefore(delimiter = "/")){
@@ -40,6 +43,7 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                 }
             }
         }
+
         composable(Screen.Register.route){
             BuildRegisterScreen(){ route ->
                 when(route.substringBefore(delimiter = "/")){
@@ -53,6 +57,7 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                 }
             }
         }
+
         composable(Screen.Menu.route + "/{user}", arguments = listOf(navArgument("user"){ type = NavType.StringType })){ it ->
             val user = it.arguments?.getString("user")
             user?.let { user ->
@@ -69,10 +74,34 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                 }
             }
         }
+
         composable(Screen.Distributors.route){
-            BuildDistributorsScreen(){ route ->
-                when(route){
+            BuildDistributorsScreen { route ->
+                when(route.substringBefore(delimiter = "?")){
+                    Screen.CreateDistributor.route -> {
+                        navController.navigate(route)
+                    }
+
                     else -> navController.popBackStack()
+                }
+            }
+        }
+
+        composable(
+            route = Screen.CreateDistributor.route + "?distributor={distributor}",
+            arguments = listOf(
+                navArgument("distributor"){
+                    type = NavType.StringType
+                    nullable = true
+                }
+            )
+        ){
+            val distributor = it.arguments?.getString("distributor")
+            BuildCreateDistributor(distributor = distributor?.fromJson(Distributor::class.java)){ route ->
+                when(route){
+                    else -> {
+                        navController.popBackStack()
+                    }
                 }
             }
         }

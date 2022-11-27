@@ -25,7 +25,7 @@ class DistributorsViewModel(
     fun submitAction(action: DistributorsAction){
         when(action){
             is DistributorsAction.GetDistributors -> getDistributors()
-            is DistributorsAction.DeleteDistributor -> deleteDistributor(id = action.id)
+            is DistributorsAction.DeleteDistributor -> deleteDistributor(reference = action.reference)
         }
     }
 
@@ -48,14 +48,14 @@ class DistributorsViewModel(
         }
     }
 
-    private fun deleteDistributor(id: String){
+    private fun deleteDistributor(reference: String){
         _state.value = _state.value.copy(isRequesting = true)
         viewModelScope.launch(Dispatchers.IO) {
             deleteDistributorUseCase.deleteDistributor(
-                id = id,
+                reference = reference,
                 onHandler = object : RequestHandler{
                     override fun onSuccess(data: Any?) {
-                        _state.value = _state.value.copy(isRequesting = false, isLoading = true)
+                        _state.value = _state.value.copy(isRequesting = false)
                         submitAction(DistributorsAction.GetDistributors)
                     }
 

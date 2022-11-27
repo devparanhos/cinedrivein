@@ -6,6 +6,7 @@ import com.example.cinedrivein.common.utils.extensions.toHash
 import com.example.cinedrivein.domain.model.Request
 import com.example.cinedrivein.domain.model.distributor.Distributor
 import com.example.cinedrivein.domain.model.user.User
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FirestoreService(private val firestore: FirebaseFirestore) {
@@ -65,15 +66,29 @@ class FirestoreService(private val firestore: FirebaseFirestore) {
             }
     }
 
-    fun deleteDistributors(id: String, onHandler: (Request) -> Unit){
+    fun deleteDistributors(reference: String, onHandler: (Request) -> Unit){
         firestore.collection(FirestoreCollections.DISTRIBUTORS_COLLECTION)
-            .document(id)
+            .document(reference)
             .delete()
             .addOnSuccessListener {
                 onHandler(Request.Success(data = true))
             }
             .addOnFailureListener {
                 onHandler(Request.Error(data = false, message = null))
+            }
+    }
+
+    fun createDistributors(distributor: Distributor, onHandler: (Request) -> Unit){
+        val distributorDoc = firestore.collection(FirestoreCollections.DISTRIBUTORS_COLLECTION).document()
+        distributor.id = distributorDoc.id
+
+        distributorDoc
+            .set(distributor.toHash())
+            .addOnSuccessListener {
+                onHandler(Request.Success(data = true))
+            }
+            .addOnFailureListener {
+                onHandler(Request.Error(data = false, message = it.message))
             }
     }
 }

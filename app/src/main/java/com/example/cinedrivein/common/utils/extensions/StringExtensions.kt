@@ -28,13 +28,25 @@ fun String.validatePassword(): InputValidation {
     }
 }
 
-fun String.validateName(): InputValidation{
+fun String.validateText(prefix: String): InputValidation{
     val inputValidation = InputValidation()
 
     return if (this.trim().isEmpty()){
-        inputValidation.copy(isValid = false, errorMessage = "* O nome é obrigatório")
+        inputValidation.copy(isValid = false, errorMessage = "* $prefix é obrigatório")
     } else if (this.trim().length <= 3){
-        inputValidation.copy(isValid = false, errorMessage = "* O nome inserido é inválido")
+        inputValidation.copy(isValid = false, errorMessage = "* $prefix inserido é inválido")
+    } else {
+        inputValidation.copy(isValid = true, errorMessage = null)
+    }
+}
+
+fun String.validateCnpj(): InputValidation {
+    val inputValidation = InputValidation()
+
+    return if (this.trim().isEmpty()){
+        inputValidation.copy(isValid = false, errorMessage = "* O CNPJ é obrigatório")
+    } else if (this.trim().length != 18){
+        inputValidation.copy(isValid = false, errorMessage = "* O CNPJ inserido é inválido")
     } else {
         inputValidation.copy(isValid = true, errorMessage = null)
     }
@@ -72,4 +84,21 @@ fun <A> String.fromJson(type: Class<A>): A {
 
 fun <A> A.toJson(): String? {
     return Gson().toJson(this)
+}
+
+fun String.convertCnpj(): String{
+    var cnpj = ""
+
+    this.forEachIndexed { index, char ->
+        when(this.length){
+            3 -> if (index == 2 && char.isDigit()) cnpj += "."
+            7 -> if (index == 6 && char.isDigit()) cnpj += "."
+            11 -> if (index == 10 && char.isDigit()) cnpj += "/"
+            16 -> if (index == 15 && char.isDigit()) cnpj += "-"
+        }
+
+        cnpj += char
+    }
+
+    return cnpj
 }

@@ -11,6 +11,7 @@ import com.example.cinedrivein.domain.repository.AncineRepository
 import com.example.cinedrivein.domain.repository.DistributorsRepository
 import com.example.cinedrivein.domain.repository.UserRepository
 import com.example.cinedrivein.domain.usecase.*
+import com.example.cinedrivein.domain.usecase.distributors.CreateDistributorUseCase
 import com.example.cinedrivein.domain.usecase.distributors.DeleteDistributorUseCase
 import com.example.cinedrivein.domain.usecase.distributors.GetDistributorsUseCase
 import com.example.cinedrivein.domain.usecase.login.LoginUseCase
@@ -21,6 +22,7 @@ import com.example.cinedrivein.domain.usecase.user.CreateUserUseCase
 import com.example.cinedrivein.domain.usecase.user.GetUserUseCase
 import com.example.cinedrivein.domain.usecase.user.RegisterUseCase
 import com.example.cinedrivein.presentation.feature.ancine.create.viewmodel.CreateAncineReportViewModel
+import com.example.cinedrivein.presentation.feature.distributors.create.viewmodel.CreateDistributorViewModel
 import com.example.cinedrivein.presentation.feature.distributors.list.viewmodel.DistributorsViewModel
 import com.example.cinedrivein.presentation.feature.home.viewmodel.HomeViewModel
 import com.example.cinedrivein.presentation.feature.login.viewmodel.LoginViewModel
@@ -107,6 +109,10 @@ val appModule = module {
         DeleteDistributorUseCase(repository = get())
     }
 
+    single{
+        CreateDistributorUseCase(repository = get())
+    }
+
     viewModel {
         CreateAncineReportViewModel(sendAncineReportUseCase = get())
     }
@@ -129,5 +135,9 @@ val appModule = module {
 
     viewModel{
         DistributorsViewModel(getDistributorsUseCase = get(), deleteDistributorUseCase = get())
+    }
+
+    viewModel {
+        CreateDistributorViewModel(createDistributorUseCase = get())
     }
 }

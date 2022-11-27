@@ -35,6 +35,6 @@ fun DefaultTopbar(
             }
         )
         WidthSpacer(width = 16)
-        Text(text = text, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        Text(text = text, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
     }
 }

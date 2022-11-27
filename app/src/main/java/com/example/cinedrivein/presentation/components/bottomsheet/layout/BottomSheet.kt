@@ -34,7 +34,7 @@ fun BuildBottomSheet(
 
             is BottomSheetLayout.DeleteData -> DeleteDataBottomSheet(
                 reference = layout.data,
-                onAction = { onAction?.invoke(layout.id)},
+                onAction = { onAction?.invoke(layout.reference)},
             )
 
             is BottomSheetLayout.RecoverPassword -> RecoverPasswordBottomSheet(){

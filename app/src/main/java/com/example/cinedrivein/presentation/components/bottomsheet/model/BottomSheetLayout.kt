@@ -4,5 +4,5 @@ sealed class BottomSheetLayout{
     object AncineInfo: BottomSheetLayout()
     object RecoverPassword: BottomSheetLayout()
 
-    class DeleteData(val id: String? = null, val data: String? = null): BottomSheetLayout()
+    class DeleteData(val reference: String? = null, val data: String? = null): BottomSheetLayout()
 }

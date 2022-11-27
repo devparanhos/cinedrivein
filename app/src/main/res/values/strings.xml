@@ -16,22 +16,27 @@
 
     <!-- Subtítulos -->
     <string name="login_subtitle_login">Insira seus dados abaixo e faça login</string>
-    <string name="register_subtitle_register">Lembramos que para este cadastro você deve ser um colaborador do Cine Drive-in Brasília</string>
+    <string name="subtitle_register">Lembramos que para este cadastro você deve ser um colaborador do Cine Drive-in Brasília</string>
     <string name="subtitle_ancine_number_explination">Cada cinema possui um código identificador com a Ancine. Verifique com o exibidor qual o código do Cine Drive-in para seu cadastro</string>
     <string name="subtitle_recover_password">Vamos enviar um e-mail para você redefinir sua senha. Insira abaixo o e-mail do seu cadastro conosco</string>
     <string name="subtitle_home">O que você quer configurar agora?</string>
     <string name="subtitle_delete_data">Deseja excluir %1$s. Caso remova não poderá recuperar esse dado posteriormente.</string>
+    <string name="subtitle_create_distributor">As distribuidoras são as empresas que liberam os filmes para o exibidor passar no cinema</string>
 
     <!-- Placeholder -->
     <string name="login_placeholder_email">E-mail</string>
     <string name="login_placeholder_password">Senha</string>
     <string name="register_placeholder_confirm_password">Confirmar senha</string>
     <string name="placeholder_full_name">Nome completo</string>
+    <string name="placeholder_name">Nome</string>
+    <string name="placeholder_social_name">Razão social</string>
+    <string name="placeholder_cnpj">CNPJ</string>
     <string name="placeholder_ancine_nubmer">Registro ANCINE</string>
 
     <!-- Botões -->
     <string name="buttons_enter">Entrar</string>
     <string name="buttons_register">Cadastrar</string>
+    <string name="buttons_update">Atualizar</string>
     <string name="buttons_send_email">Enviar e-mail</string>
     <string name="buttons_change_password">Alterar senha</string>
     <string name="buttons_delete">Deletar</string>
@@ -60,5 +65,7 @@
 
     <!-- Topbar títulos -->
     <string name="topbar_title_distributors">Distribuidoras</string>
+    <string name="topbar_title_create_distributor">Cadastrar distribuidora</string>
+    <string name="topbar_title_update_distributor">Atualizar distribuidora</string>
 
 </resources>
