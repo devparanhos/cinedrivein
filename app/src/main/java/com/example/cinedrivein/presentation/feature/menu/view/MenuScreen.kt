@@ -26,6 +26,7 @@ import com.example.cinedrivein.presentation.components.button.FilledButtonSmall
 import com.example.cinedrivein.presentation.components.menuitem.MenuItem
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
 import com.example.cinedrivein.presentation.components.spacer.ListDivider
+import com.example.cinedrivein.presentation.components.spacer.WidthSpacer
 import com.example.cinedrivein.presentation.components.text.MainTitle
 import com.example.cinedrivein.presentation.components.text.Subtitle
 import com.example.cinedrivein.presentation.feature.menu.action.MenuAction
@@ -79,9 +80,7 @@ fun MenuScreenLayout(state: MenuState, onAction:(MenuAction) -> Unit, onNavigati
                 .background(Primary.copy(alpha = 0.8f))
         ){
             Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1.0f)
+                modifier = Modifier.padding(16.dp).weight(1.0f)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_back),
@@ -101,22 +100,22 @@ fun MenuScreenLayout(state: MenuState, onAction:(MenuAction) -> Unit, onNavigati
                         .fillMaxHeight()
                 ) {
                     Column(
-                        modifier = Modifier
-                            .weight(2.0f)
-                            .fillMaxHeight(),
+                        modifier = Modifier.weight(1.0f).fillMaxHeight(),
+                        verticalArrangement = Arrangement.Bottom,
+                        horizontalAlignment = Alignment.Start
                     ) {
                         state.user?.let { user ->
                             HeightSpacer(height = 24)
-                            MainTitle(text = user.name, color = Color.White)
+                            MainTitle(text = user.name, color = Color.White, maxlines = 1)
                             HeightSpacer(height = 4)
-                            Subtitle(text = user.email, color = Color.White)
+                            Subtitle(text = user.email, color = Color.White, maxlines = 1)
                         }
                     }
+                    WidthSpacer(width = 16)
                     Row(
-                        modifier = Modifier
-                            .weight(1.5f)
-                            .fillMaxHeight(),
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier = Modifier.weight(1.0f).fillMaxHeight(),
+                        verticalAlignment = Alignment.Bottom,
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         FilledButtonSmall(
                             text = stringResource(id = R.string.buttons_change_password).uppercase(),
@@ -130,7 +129,7 @@ fun MenuScreenLayout(state: MenuState, onAction:(MenuAction) -> Unit, onNavigati
 
             }
             Column(
-                modifier = Modifier.weight(5.0f)
+                modifier = Modifier.weight(4.0f)
             ) {
                 Card(
                     modifier = Modifier
@@ -160,7 +159,7 @@ fun MenuScreenLayout(state: MenuState, onAction:(MenuAction) -> Unit, onNavigati
                                     icon = painterResource(id = R.drawable.ic_movie),
                                     hasArrow = true
                                 ) {
-
+                                    onNavigation(Screen.Movies.route)
                                 }
                                 ListDivider(distance = 16)
                                 MenuItem(

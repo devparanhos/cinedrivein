@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.cinedrivein.R
 import com.example.cinedrivein.common.utils.extensions.toJson
 import com.example.cinedrivein.presentation.components.loader.ScreenLoading
+import com.example.cinedrivein.presentation.components.menuitem.MenuCard
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
 import com.example.cinedrivein.presentation.components.text.MainTitle
 import com.example.cinedrivein.presentation.components.text.Subtitle
@@ -96,6 +98,18 @@ fun HomeScreenLayout(state: HomeState, onAction: (HomeAction) -> Unit, onNavigat
                                     }
                                 )
                             }
+                        }
+                    }
+                    HeightSpacer(height = 16)
+                    LazyRow{
+                        item {
+                            MenuCard(
+                                text = "Filmes",
+                                image = painterResource(id = R.drawable.ic_movie),
+                                onClick = {
+                                    onNavigation(Screen.Movies.route)
+                                }
+                            )
                         }
                     }
                 }

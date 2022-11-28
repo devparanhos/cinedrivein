@@ -11,4 +11,5 @@ object CineDriveIn{
 object FirestoreCollections{
     const val USERS_COLLECTION = "USERS"
     const val DISTRIBUTORS_COLLECTION = "DISTRIBUTORS"
+    const val MOVIES_COLLECTION = "MOVIES"
 }

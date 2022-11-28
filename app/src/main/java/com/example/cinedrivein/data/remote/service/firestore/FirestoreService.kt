@@ -1,11 +1,14 @@
 package com.example.cinedrivein.data.remote.service.firestore
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import com.example.cinedrivein.common.constants.FirestoreCollections
 import com.example.cinedrivein.common.utils.extensions.toHash
 import com.example.cinedrivein.domain.model.Request
 import com.example.cinedrivein.domain.model.distributor.Distributor
+import com.example.cinedrivein.domain.model.movie.Movie
 import com.example.cinedrivein.domain.model.user.User
+import com.example.cinedrivein.presentation.navigation.Screen
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -86,6 +89,41 @@ class FirestoreService(private val firestore: FirebaseFirestore) {
             .set(distributor.toHash())
             .addOnSuccessListener {
                 onHandler(Request.Success(data = true))
+            }
+            .addOnFailureListener {
+                onHandler(Request.Error(data = false, message = it.message))
+            }
+    }
+
+    fun updateDistributors(distributor: Distributor, onHandler: (Request) -> Unit){
+        firestore.collection(FirestoreCollections.DISTRIBUTORS_COLLECTION)
+            .document(distributor.id!!)
+            .set(distributor.toHash())
+            .addOnSuccessListener {
+                onHandler(Request.Success(data = true))
+            }
+            .addOnFailureListener {
+                onHandler(Request.Error(data = false, message = it.message))
+            }
+    }
+
+    fun getMovies(page: String, onHandler: (Request) -> Unit){
+        firestore.collection(FirestoreCollections.MOVIES_COLLECTION)
+            .whereEqualTo("page", page)
+            .get()
+            .addOnSuccessListener { document ->
+                val movies = mutableStateListOf<Movie>()
+                document.documents.forEach {  movie ->
+                    movies.add(
+                        Movie(
+                            name = movie.data?.get("name") as String,
+                            image = movie.data?.get("image") as String,
+                            page = movie.data?.get("page") as String,
+                        )
+                    )
+                }
+
+                onHandler(Request.Success(data = movies))
             }
             .addOnFailureListener {
                 onHandler(Request.Error(data = false, message = it.message))

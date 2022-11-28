@@ -8,6 +8,7 @@ import com.example.cinedrivein.common.utils.extensions.validateText
 import com.example.cinedrivein.domain.handler.RequestHandler
 import com.example.cinedrivein.domain.model.distributor.Distributor
 import com.example.cinedrivein.domain.usecase.distributors.CreateDistributorUseCase
+import com.example.cinedrivein.domain.usecase.distributors.UpdateDistributorUseCase
 import com.example.cinedrivein.presentation.feature.distributors.create.action.CreateDistributorAction
 import com.example.cinedrivein.presentation.feature.distributors.create.state.CreateDistributorState
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CreateDistributorViewModel(
-    private val createDistributorUseCase: CreateDistributorUseCase
+    private val createDistributorUseCase: CreateDistributorUseCase,
+    private val updateDistributorUseCase: UpdateDistributorUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow(CreateDistributorState())
     val state: StateFlow<CreateDistributorState> = _state
@@ -37,8 +39,11 @@ class CreateDistributorViewModel(
                 distributor = it,
                 name = it.name,
                 socialName = it.socialName,
-                cnpj = it.cnpj
+                cnpj = it.cnpj,
+                isLoading = false
             )
+        }.also {
+            _state.value = _state.value.copy(isLoading = false)
         }
     }
 
@@ -70,7 +75,20 @@ class CreateDistributorViewModel(
     }
 
     private fun updateDistributor(distributor: Distributor){
+        viewModelScope.launch(Dispatchers.IO) {
+            updateDistributorUseCase.updateDistributor(
+                distributor = distributor,
+                onHandler = object : RequestHandler{
+                    override fun onSuccess(data: Any?) {
+                        _state.value = _state.value.copy(isDistributorUpdated = true)
+                    }
 
+                    override fun onError(data: Any?, message: String?) {
+                        Log.i("Teste", "teste")
+                    }
+                }
+            )
+        }
     }
 
     private fun createDistributor(distributor: Distributor){

@@ -58,9 +58,7 @@ fun FilledButtonSmall(
     onClick: () -> Unit
 ){
     Button(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(46.dp),
+        modifier = modifier.fillMaxWidth().height(46.dp),
         enabled = isEnabled,
         contentPadding = PaddingValues(8.dp),
         colors = ButtonDefaults.buttonColors(

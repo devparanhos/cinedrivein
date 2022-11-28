@@ -7,4 +7,7 @@ sealed class Screen(val route: String){
     object Menu:Screen(route = "menu")
     object Distributors:Screen(route = "distributors")
     object CreateDistributor:Screen(route = "create_distributor")
+    object Movies:Screen(route = "movies")
+    object Return:Screen(route = "return")
+
 }

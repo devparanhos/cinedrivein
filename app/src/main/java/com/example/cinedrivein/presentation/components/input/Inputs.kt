@@ -1,23 +1,37 @@
 package com.example.cinedrivein.presentation.components.input
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.widget.Placeholder
+import androidx.core.text.isDigitsOnly
 import com.example.cinedrivein.R
 import com.example.cinedrivein.common.utils.extensions.convertCnpj
 import com.example.cinedrivein.presentation.components.spacer.HeightSpacer
+import com.example.cinedrivein.presentation.components.spacer.WidthSpacer
 import com.example.cinedrivein.presentation.components.text.TextError
 import com.example.cinedrivein.presentation.theme.LightGray
+import com.example.cinedrivein.presentation.theme.Primary
 
 @Composable
 fun InputEmail(
@@ -327,4 +341,59 @@ fun InputCnpj(
             TextError(text = it)
         }
     }
+}
+
+@Composable
+fun InputSearch(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    placeholder: String,
+    data: String,
+    onChange: (String) -> Unit
+){
+    BasicTextField(
+        modifier = modifier
+            .height(40.dp)
+            .fillMaxWidth()
+            .border(BorderStroke(width = 1.dp, color = LightGray), RoundedCornerShape(8.dp))
+            .background(color = if (enabled) Color.White else Color.LightGray, shape = RoundedCornerShape(8.dp)),
+        value = data,
+        enabled = enabled,
+        singleLine = true,
+        decorationBox = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search),
+                    contentDescription = null,
+                    tint = LightGray
+                )
+                WidthSpacer(width = 6)
+                Text(
+                    text = if(data.isNullOrBlank()) placeholder else data,
+                    color = LightGray,
+                    maxLines = 1,
+                    overflow = TextOverflow.Clip
+                )
+            }
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Search,
+            keyboardType = KeyboardType.Text
+        ),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+
+            }
+        ),
+        onValueChange = {
+            onChange(it)
+        }
+    )
 }

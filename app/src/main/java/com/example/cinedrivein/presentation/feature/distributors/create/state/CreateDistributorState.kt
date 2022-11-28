@@ -3,6 +3,7 @@ package com.example.cinedrivein.presentation.feature.distributors.create.state
 import com.example.cinedrivein.domain.model.distributor.Distributor
 
 data class CreateDistributorState(
+    val isLoading: Boolean = true,
     val name: String = "",
     val socialName: String = "",
     val cnpj: String = "",
@@ -11,5 +12,7 @@ data class CreateDistributorState(
     val socialNameError: String? = "",
     val cnpjError: String? = "",
     val isRequesting: Boolean = false,
-    val isDistributorCreated: Boolean = false
+    val isDistributorCreated: Boolean = false,
+    val isDistributorUpdated: Boolean = false
+
 )

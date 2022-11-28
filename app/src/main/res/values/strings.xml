@@ -32,6 +32,7 @@
     <string name="placeholder_social_name">Razão social</string>
     <string name="placeholder_cnpj">CNPJ</string>
     <string name="placeholder_ancine_nubmer">Registro ANCINE</string>
+    <string name="placeholder_search_movie">Pesquisar filme</string>
 
     <!-- Botões -->
     <string name="buttons_enter">Entrar</string>
@@ -67,5 +68,6 @@
     <string name="topbar_title_distributors">Distribuidoras</string>
     <string name="topbar_title_create_distributor">Cadastrar distribuidora</string>
     <string name="topbar_title_update_distributor">Atualizar distribuidora</string>
+    <string name="topbar_title_movies">Filmes</string>
 
 </resources>

@@ -1,10 +1,9 @@
 package com.example.cinedrivein.presentation.components.menuitem
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +40,31 @@ fun MenuItem(
                 painter = painterResource(id = R.drawable.ic_small_arrow_right),
                 contentDescription = null
             )
+        }
+    }
+}
+
+@Composable
+fun MenuCard(
+    text: String,
+    image: Painter,
+    onClick: () -> Unit
+){
+    Card(
+        modifier = Modifier.height(70.dp).width(70.dp).clickable {
+            onClick()
+        }
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                modifier = Modifier.size(26.dp),
+                painter = image,
+                contentDescription = null
+            )
+            Text(text = text)
         }
     }
 }

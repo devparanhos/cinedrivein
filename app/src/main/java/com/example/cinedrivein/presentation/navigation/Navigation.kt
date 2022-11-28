@@ -16,6 +16,7 @@ import com.example.cinedrivein.presentation.feature.distributors.list.view.Build
 import com.example.cinedrivein.presentation.feature.home.view.BuildHomeScreen
 import com.example.cinedrivein.presentation.feature.login.view.BuildLoginScreen
 import com.example.cinedrivein.presentation.feature.menu.view.BuildMenuScreen
+import com.example.cinedrivein.presentation.feature.movie.list.view.BuildMoviesScreen
 import com.example.cinedrivein.presentation.feature.register.view.BuildRegisterScreen
 
 @Composable
@@ -39,7 +40,7 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                         popUpTo(0)
                     }
 
-                    Screen.Menu.route -> navController.navigate(route)
+                    else -> navController.navigate(route)
                 }
             }
         }
@@ -69,6 +70,8 @@ fun Navigation(navController:NavHostController = rememberNavController()){
 
                         Screen.Distributors.route -> navController.navigate(route)
 
+                        Screen.Movies.route -> navController.navigate(route)
+
                         else -> navController.popBackStack()
                     }
                 }
@@ -82,6 +85,14 @@ fun Navigation(navController:NavHostController = rememberNavController()){
                         navController.navigate(route)
                     }
 
+                    else -> navController.popBackStack()
+                }
+            }
+        }
+
+        composable(Screen.Movies.route){
+            BuildMoviesScreen() { route ->
+                when(route){
                     else -> navController.popBackStack()
                 }
             }
